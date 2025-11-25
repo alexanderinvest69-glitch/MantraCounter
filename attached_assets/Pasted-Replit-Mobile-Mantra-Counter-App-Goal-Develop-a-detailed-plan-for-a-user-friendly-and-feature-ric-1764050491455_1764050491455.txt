@@ -1,0 +1,42 @@
+Replit Mobile Mantra Counter App
+Goal:
+Develop a detailed plan for a user-friendly and feature-rich mobile mantra counter application, optimized for implementation on the Replit platform by a prompt engineer and mobile app developer.
+
+Requirements
+The app must function as a dedicated mantra counter.
+
+Upon reaching a count of 108, the device must vibrate clearly.
+
+Counting actions should support both screen touch and volume up/down buttons for increasing and decreasing the count respectively.
+
+The application must allow users to create and manage up to 10 distinct counter configurations.
+
+The user interface and experience should prioritize simplicity, intuitiveness, and ease of use, even with advanced features.
+
+Ideas should consider the technical feasibility and development environment of the Replit platform for mobile app creation.
+
+The proposed features should enhance the user's meditation or counting practice, not complicate it.
+
+Ideas must be presented in a way that is immediately actionable for an 'ultra pro' prompt engineer.
+
+Consider how the app handles edge cases, such as accidental button presses or resetting counts.
+
+Attributes
+Feature Set Completeness: Rate how comprehensively the idea covers all core and suggested features (1: only basic, 3: covers most, 5: all core + innovative additions).
+
+UI/UX Simplicity: Evaluate the ease of use and clarity of the user interface (1: confusing, 3: acceptable, 5: extremely intuitive).
+
+Replit Feasibility: Assess the ease of implementing this idea specifically on the Replit platform (1: very difficult, 3: moderate, 5: straightforward).
+
+Novelty & Utility: Rate the creativity and practical value of any additional features or approaches (1: generic, 3: reasonably creative/useful, 5: highly innovative & valuable).
+
+Prompt Readiness: How well-structured and detailed is the idea to be directly translated into an actionable prompt for development (1: vague, 3: good, 5: 'ultra pro' level).
+
+Customization Depth: Assess the flexibility and usefulness of the customization options for the 10 counter settings (1: minimal, 3: good, 5: extensive and user-friendly).
+
+Criteria
+Idea correctness: Required
+
+Idea novelty: Required
+
+Maximize impact: No
