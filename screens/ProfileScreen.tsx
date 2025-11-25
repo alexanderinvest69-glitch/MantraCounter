@@ -100,6 +100,15 @@ export default function ProfileScreen() {
           </View>
         </View>
 
+        <View style={[styles.infoSection, { backgroundColor: theme.backgroundSecondary }]}>
+          <Feather name="volume-2" size={20} color={theme.primary} />
+          <View style={styles.infoText}>
+            <ThemedText style={[styles.infoDescription, { color: theme.textSecondary }]}>
+              Use your device's volume buttons to increment (volume up) and decrement (volume down) your counter during meditation.
+            </ThemedText>
+          </View>
+        </View>
+
         <View style={[styles.aboutSection, { backgroundColor: theme.backgroundSecondary }]}>
           <Feather name="info" size={24} color={theme.primary} />
           <View style={styles.aboutText}>
@@ -165,12 +174,26 @@ const styles = StyleSheet.create({
   goalButtonText: {
     ...Typography.buttonLabel,
   },
+  infoSection: {
+    flexDirection: 'row',
+    padding: Spacing.md,
+    borderRadius: BorderRadius.sm,
+    gap: Spacing.md,
+    alignItems: 'flex-start',
+  },
+  infoText: {
+    flex: 1,
+  },
+  infoDescription: {
+    ...Typography.small,
+    lineHeight: 20,
+  },
   aboutSection: {
     flexDirection: 'row',
     padding: Spacing.xl,
     borderRadius: BorderRadius.md,
     gap: Spacing.md,
-    marginTop: Spacing.xxl,
+    marginTop: Spacing.lg,
   },
   aboutText: {
     flex: 1,

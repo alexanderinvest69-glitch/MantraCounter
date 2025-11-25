@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, Pressable, Alert, Dimensions } from 'react-native';
+import { View, StyleSheet, Pressable, Modal, Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -11,6 +11,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { CircularProgress } from '@/components/CircularProgress';
 import { GoalModal } from '@/components/GoalModal';
+import { Button } from '@/components/Button';
 import { useCounter } from '@/context/CounterContext';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing, Typography, BorderRadius } from '@/constants/theme';
@@ -25,6 +26,7 @@ export default function CountersScreen() {
   const insets = useSafeAreaInsets();
   const { counters, activeCounterId, settings, incrementCount, decrementCount, resetCount } = useCounter();
   const [showGoalModal, setShowGoalModal] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const previousCountRef = useRef(0);
   
   const scale = useSharedValue(1);
@@ -75,24 +77,16 @@ export default function CountersScreen() {
   };
 
   const handleReset = () => {
-    Alert.alert(
-      'Reset Counter',
-      `Are you sure you want to reset "${activeCounter.name}" to 0?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Reset',
-          style: 'destructive',
-          onPress: () => {
-            resetCount();
-            setShowGoalModal(false);
-            if (settings.hapticEnabled) {
-              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            }
-          },
-        },
-      ]
-    );
+    setShowResetConfirm(true);
+  };
+
+  const confirmReset = () => {
+    resetCount();
+    setShowGoalModal(false);
+    setShowResetConfirm(false);
+    if (settings.hapticEnabled) {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    }
   };
 
   const animatedCountStyle = useAnimatedStyle(() => ({
@@ -163,10 +157,40 @@ export default function CountersScreen() {
         goal={activeCounter.goal}
         onContinue={() => setShowGoalModal(false)}
         onReset={() => {
-          handleReset();
           setShowGoalModal(false);
+          setShowResetConfirm(true);
         }}
       />
+
+      <Modal
+        visible={showResetConfirm}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowResetConfirm(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.confirmModal, { backgroundColor: theme.backgroundDefault }]}>
+            <ThemedText style={styles.confirmTitle}>Reset Counter</ThemedText>
+            <ThemedText style={[styles.confirmMessage, { color: theme.textSecondary }]}>
+              Are you sure you want to reset "{activeCounter.name}" to 0?
+            </ThemedText>
+            <View style={styles.confirmButtons}>
+              <Pressable
+                style={[styles.confirmButton, { backgroundColor: theme.backgroundSecondary }]}
+                onPress={() => setShowResetConfirm(false)}
+              >
+                <ThemedText>Cancel</ThemedText>
+              </Pressable>
+              <Pressable
+                style={[styles.confirmButton, styles.confirmButtonDestructive]}
+                onPress={confirmReset}
+              >
+                <ThemedText style={styles.confirmButtonDestructiveText}>Reset</ThemedText>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ThemedView>
   );
 }
@@ -235,5 +259,45 @@ const styles = StyleSheet.create({
   },
   controlLabel: {
     ...Typography.small,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: Spacing.xl,
+  },
+  confirmModal: {
+    borderRadius: BorderRadius.lg,
+    padding: Spacing.xl,
+    width: '100%',
+    maxWidth: 400,
+    gap: Spacing.lg,
+  },
+  confirmTitle: {
+    ...Typography.h3,
+    textAlign: 'center',
+  },
+  confirmMessage: {
+    ...Typography.body,
+    textAlign: 'center',
+  },
+  confirmButtons: {
+    flexDirection: 'row',
+    gap: Spacing.md,
+    marginTop: Spacing.md,
+  },
+  confirmButton: {
+    flex: 1,
+    paddingVertical: Spacing.md,
+    borderRadius: BorderRadius.sm,
+    alignItems: 'center',
+  },
+  confirmButtonDestructive: {
+    backgroundColor: '#FF3B30',
+  },
+  confirmButtonDestructiveText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
   },
 });
