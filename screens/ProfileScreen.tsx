@@ -1,194 +1,185 @@
-import { useState } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
-import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React from 'react';
+import { View, StyleSheet, TextInput, Pressable, Switch } from 'react-native';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { ScreenScrollView } from '@/components/ScreenScrollView';
+import { AvatarPicker } from '@/components/AvatarPicker';
+import { useCounter } from '@/context/CounterContext';
+import { useTheme } from '@/hooks/useTheme';
+import { Spacing, Typography, BorderRadius } from '@/constants/theme';
+import { DEFAULT_GOALS } from '@/types/counter';
+import { Feather } from '@expo/vector-icons';
 
-import { ScreenKeyboardAwareScrollView } from "@/components/ScreenKeyboardAwareScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { Button } from "@/components/Button";
-import { useTheme } from "@/hooks/useTheme";
-import { Spacing, BorderRadius, Typography } from "@/constants/theme";
-import Spacer from "@/components/Spacer";
-import type { ProfileStackParamList } from "@/navigation/ProfileStackNavigator";
-
-type ProfileScreenProps = {
-  navigation: NativeStackNavigationProp<ProfileStackParamList, "Profile">;
-};
-
-export default function ProfileScreen({ navigation }: ProfileScreenProps) {
-  const { theme, isDark } = useTheme();
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = () => {
-    console.log("Form submitted:", { name, email, password });
-  };
-
-  const inputStyle = [
-    styles.input,
-    {
-      backgroundColor: theme.backgroundDefault,
-      color: theme.text,
-    },
-  ];
+export default function ProfileScreen() {
+  const { theme } = useTheme();
+  const { settings, updateSettings } = useCounter();
 
   return (
-    <ScreenKeyboardAwareScrollView>
-      <View style={styles.section}>
-        <ThemedText type="h1">Heading 1</ThemedText>
-        <ThemedText type="small" style={styles.meta}>
-          32px • Bold
-        </ThemedText>
-      </View>
+    <ThemedView style={styles.container}>
+      <ScreenScrollView contentContainerStyle={styles.content}>
+        <View style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>Avatar</ThemedText>
+          <AvatarPicker
+            selectedAvatar={settings.avatar}
+            onAvatarSelect={(avatar) => updateSettings({ avatar })}
+          />
+        </View>
 
-      <View style={styles.section}>
-        <ThemedText type="h2">Heading 2</ThemedText>
-        <ThemedText type="small" style={styles.meta}>
-          28px • Bold
-        </ThemedText>
-      </View>
+        <View style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>Display Name</ThemedText>
+          <TextInput
+            style={[
+              styles.input,
+              {
+                backgroundColor: theme.backgroundSecondary,
+                color: theme.text,
+                borderColor: theme.backgroundTertiary,
+              },
+            ]}
+            value={settings.displayName}
+            onChangeText={(text) => updateSettings({ displayName: text })}
+            placeholder="Your Name"
+            placeholderTextColor={theme.textSecondary}
+            maxLength={30}
+          />
+        </View>
 
-      <View style={styles.section}>
-        <ThemedText type="h3">Heading 3</ThemedText>
-        <ThemedText type="small" style={styles.meta}>
-          24px • Semi-Bold
-        </ThemedText>
-      </View>
+        <View style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>Preferences</ThemedText>
+          
+          <View style={[styles.settingRow, { backgroundColor: theme.backgroundSecondary }]}>
+            <View style={styles.settingInfo}>
+              <Feather name="smartphone" size={20} color={theme.text} />
+              <ThemedText style={styles.settingLabel}>Haptic Feedback</ThemedText>
+            </View>
+            <Switch
+              value={settings.hapticEnabled}
+              onValueChange={(value) => updateSettings({ hapticEnabled: value })}
+              trackColor={{ false: theme.backgroundTertiary, true: theme.primary }}
+            />
+          </View>
 
-      <View style={styles.section}>
-        <ThemedText type="h4">Heading 4</ThemedText>
-        <ThemedText type="small" style={styles.meta}>
-          20px • Semi-Bold
-        </ThemedText>
-      </View>
+          <View style={[styles.settingRow, { backgroundColor: theme.backgroundSecondary }]}>
+            <View style={styles.settingInfo}>
+              <Feather name="volume-2" size={20} color={theme.text} />
+              <ThemedText style={styles.settingLabel}>Sound Feedback</ThemedText>
+            </View>
+            <Switch
+              value={settings.soundEnabled}
+              onValueChange={(value) => updateSettings({ soundEnabled: value })}
+              trackColor={{ false: theme.backgroundTertiary, true: theme.primary }}
+            />
+          </View>
+        </View>
 
-      <View style={styles.section}>
-        <ThemedText type="body">
-          Body text - This is the default text style for paragraphs and general
-          content.
-        </ThemedText>
-        <ThemedText type="small" style={styles.meta}>
-          16px • Regular
-        </ThemedText>
-      </View>
+        <View style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>Default Goal Count</ThemedText>
+          <View style={styles.goalButtons}>
+            {DEFAULT_GOALS.map((goal) => (
+              <Pressable
+                key={goal}
+                style={[
+                  styles.goalButton,
+                  {
+                    backgroundColor: settings.defaultGoal === goal ? theme.primary : theme.backgroundSecondary,
+                    borderColor: theme.backgroundTertiary,
+                  },
+                ]}
+                onPress={() => updateSettings({ defaultGoal: goal })}
+              >
+                <ThemedText
+                  style={[
+                    styles.goalButtonText,
+                    { color: settings.defaultGoal === goal ? '#FFFFFF' : theme.text },
+                  ]}
+                >
+                  {goal}
+                </ThemedText>
+              </Pressable>
+            ))}
+          </View>
+        </View>
 
-      <View style={styles.section}>
-        <ThemedText type="small">
-          Small text - Used for captions, labels, and secondary information.
-        </ThemedText>
-        <ThemedText type="small" style={styles.meta}>
-          14px • Regular
-        </ThemedText>
-      </View>
-
-      <View style={styles.section}>
-        <ThemedText type="link">Link text - Interactive elements</ThemedText>
-        <ThemedText type="small" style={styles.meta}>
-          16px • Regular • Colored
-        </ThemedText>
-      </View>
-
-      <Spacer height={Spacing["4xl"]} />
-
-      <View style={styles.fieldContainer}>
-        <ThemedText type="small" style={styles.label}>
-          Name
-        </ThemedText>
-        <TextInput
-          style={inputStyle}
-          value={name}
-          onChangeText={setName}
-          placeholder="Enter your name"
-          placeholderTextColor={isDark ? "#9BA1A6" : "#687076"}
-          autoCapitalize="words"
-          returnKeyType="next"
-        />
-      </View>
-
-      <Spacer height={Spacing.lg} />
-
-      <View style={styles.fieldContainer}>
-        <ThemedText type="small" style={styles.label}>
-          Email
-        </ThemedText>
-        <TextInput
-          style={inputStyle}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="your.email@example.com"
-          placeholderTextColor={isDark ? "#9BA1A6" : "#687076"}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          returnKeyType="next"
-        />
-      </View>
-
-      <Spacer height={Spacing.lg} />
-
-      <View style={styles.fieldContainer}>
-        <ThemedText type="small" style={styles.label}>
-          Password
-        </ThemedText>
-        <TextInput
-          style={inputStyle}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Enter a password"
-          placeholderTextColor={isDark ? "#9BA1A6" : "#687076"}
-          secureTextEntry
-          autoCapitalize="none"
-          returnKeyType="next"
-        />
-      </View>
-
-      <Spacer height={Spacing.lg} />
-
-      <Button onPress={handleSubmit}>Submit Form</Button>
-
-      <Spacer height={Spacing["2xl"]} />
-
-      <ThemedText type="h3" style={styles.sectionTitle}>
-        Testing
-      </ThemedText>
-      <Spacer height={Spacing.md} />
-      <Button
-        onPress={() => navigation.navigate("Crash")}
-        style={styles.crashButton}
-      >
-        Crash App
-      </Button>
-    </ScreenKeyboardAwareScrollView>
+        <View style={[styles.aboutSection, { backgroundColor: theme.backgroundSecondary }]}>
+          <Feather name="info" size={24} color={theme.primary} />
+          <View style={styles.aboutText}>
+            <ThemedText style={styles.aboutTitle}>About Mantra Counter</ThemedText>
+            <ThemedText style={[styles.aboutDescription, { color: theme.textSecondary }]}>
+              A mindful counting companion for your meditation practice. Track your mantras with ease and focus.
+            </ThemedText>
+          </View>
+        </View>
+      </ScreenScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    padding: Spacing.xl,
+    gap: Spacing.xl,
+  },
   section: {
-    marginBottom: Spacing["3xl"],
-  },
-  meta: {
-    opacity: 0.5,
-    marginTop: Spacing.sm,
-  },
-  fieldContainer: {
-    width: "100%",
-  },
-  label: {
-    marginBottom: Spacing.sm,
-    fontWeight: "600",
-    opacity: 0.8,
-  },
-  input: {
-    height: Spacing.inputHeight,
-    borderWidth: 0,
-    borderRadius: BorderRadius.md,
-    paddingHorizontal: Spacing.lg,
-    fontSize: Typography.body.fontSize,
+    gap: Spacing.md,
   },
   sectionTitle: {
-    marginTop: Spacing.xl,
+    ...Typography.h3,
+    marginBottom: Spacing.sm,
   },
-  crashButton: {
-    backgroundColor: "#FF3B30",
+  input: {
+    ...Typography.body,
+    height: Spacing.inputHeight,
+    borderRadius: BorderRadius.sm,
+    borderWidth: 1,
+    paddingHorizontal: Spacing.md,
+  },
+  settingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: Spacing.md,
+    borderRadius: BorderRadius.sm,
+  },
+  settingInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+  },
+  settingLabel: {
+    ...Typography.body,
+  },
+  goalButtons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.md,
+  },
+  goalButton: {
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.md,
+    borderRadius: BorderRadius.sm,
+    borderWidth: 1,
+  },
+  goalButtonText: {
+    ...Typography.buttonLabel,
+  },
+  aboutSection: {
+    flexDirection: 'row',
+    padding: Spacing.xl,
+    borderRadius: BorderRadius.md,
+    gap: Spacing.md,
+    marginTop: Spacing.xxl,
+  },
+  aboutText: {
+    flex: 1,
+    gap: Spacing.xs,
+  },
+  aboutTitle: {
+    ...Typography.h4,
+  },
+  aboutDescription: {
+    ...Typography.small,
   },
 });

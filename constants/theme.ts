@@ -1,43 +1,48 @@
 import { Platform } from "react-native";
 
-const tintColorLight = "#007AFF";
-const tintColorDark = "#0A84FF";
+const primaryColor = "#6B4BA6";
+const accentColor = "#D4A574";
 
 export const Colors = {
   light: {
-    text: "#11181C",
+    text: "#1F1F1F",
+    textSecondary: "#666666",
     buttonText: "#FFFFFF",
-    tabIconDefault: "#687076",
-    tabIconSelected: tintColorLight,
-    link: "#007AFF",
-    backgroundRoot: "#FFFFFF", // Elevation 0
-    backgroundDefault: "#F2F2F2", // Elevation 1
-    backgroundSecondary: "#E6E6E6", // Elevation 2
-    backgroundTertiary: "#D9D9D9", // Elevation 3
+    primary: primaryColor,
+    accent: accentColor,
+    success: "#4CAF50",
+    tabIconDefault: "#999999",
+    tabIconSelected: primaryColor,
+    link: primaryColor,
+    backgroundRoot: "#F8F7F4",
+    backgroundDefault: "#FFFFFF",
+    backgroundSecondary: "#F2F2F2",
+    backgroundTertiary: "#E8E8E8",
   },
   dark: {
-    text: "#ECEDEE",
+    text: "#F5F5F5",
+    textSecondary: "#B0B0B0",
     buttonText: "#FFFFFF",
-    tabIconDefault: "#9BA1A6",
-    tabIconSelected: tintColorDark,
-    link: "#0A84FF",
-    backgroundRoot: "#1F2123", // Elevation 0
-    backgroundDefault: "#2A2C2E", // Elevation 1
-    backgroundSecondary: "#353739", // Elevation 2
-    backgroundTertiary: "#404244", // Elevation 3
+    primary: primaryColor,
+    accent: accentColor,
+    success: "#4CAF50",
+    tabIconDefault: "#666666",
+    tabIconSelected: primaryColor,
+    link: primaryColor,
+    backgroundRoot: "#1A1A2E",
+    backgroundDefault: "#252540",
+    backgroundSecondary: "#2F2F50",
+    backgroundTertiary: "#3A3A60",
   },
 };
 
 export const Spacing = {
   xs: 4,
   sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
-  "2xl": 24,
-  "3xl": 32,
-  "4xl": 40,
-  "5xl": 48,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
   inputHeight: 48,
   buttonHeight: 52,
 };
@@ -54,40 +59,45 @@ export const BorderRadius = {
 };
 
 export const Typography = {
+  countDisplay: {
+    fontSize: 96,
+    fontWeight: "700" as const,
+  },
+  counterName: {
+    fontSize: 18,
+    fontWeight: "600" as const,
+  },
+  goalProgress: {
+    fontSize: 14,
+    fontWeight: "400" as const,
+  },
   h1: {
     fontSize: 32,
-    lineHeight: 40,
     fontWeight: "700" as const,
   },
   h2: {
     fontSize: 28,
-    lineHeight: 36,
     fontWeight: "700" as const,
   },
   h3: {
     fontSize: 24,
-    lineHeight: 32,
     fontWeight: "600" as const,
   },
   h4: {
     fontSize: 20,
-    lineHeight: 28,
     fontWeight: "600" as const,
   },
   body: {
     fontSize: 16,
-    lineHeight: 24,
     fontWeight: "400" as const,
   },
   small: {
     fontSize: 14,
-    lineHeight: 20,
     fontWeight: "400" as const,
   },
-  link: {
+  buttonLabel: {
     fontSize: 16,
-    lineHeight: 24,
-    fontWeight: "400" as const,
+    fontWeight: "500" as const,
   },
 };
 
