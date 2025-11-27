@@ -10,10 +10,11 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mantracounter.app"
+      "bundleIdentifier": "com.justcounterforpeace.app"
     },
     "android": {
-      "package": "com.mantracounter.app",
+      "package": "com.justcounterforpeace.app",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#6B4BA6",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -44,6 +45,11 @@
     ],
     "experiments": {
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "564bcc37-6b42-4790-acf7-4d711da2e119"
+      }
     }
   }
 }

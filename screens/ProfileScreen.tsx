@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TextInput, Pressable, Switch } from 'react-native';
+import { View, StyleSheet, TextInput, Pressable, Switch, Linking } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ScreenScrollView } from '@/components/ScreenScrollView';
@@ -118,6 +118,18 @@ export default function ProfileScreen() {
             </ThemedText>
           </View>
         </View>
+
+        <Pressable onPress={() => Linking.openURL('https://buymeacoffee.com/orbitofhope')}>
+          <View style={[styles.aboutSection, { backgroundColor: theme.backgroundSecondary }]}>
+            <Feather name="coffee" size={24} color={theme.primary} />
+            <View style={styles.aboutText}>
+              <ThemedText style={styles.aboutTitle}>Enjoying the app?</ThemedText>
+              <ThemedText style={[styles.aboutDescription, { color: theme.textSecondary }]}>
+                If this app is helpful to you then please support me for more at buymeacoffee.com/orbitofhope
+              </ThemedText>
+            </View>
+          </View>
+        </Pressable>
       </ScreenScrollView>
     </ThemedView>
   );
