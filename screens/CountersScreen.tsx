@@ -122,6 +122,19 @@ export default function CountersScreen() {
                 {activeCounter.count}
               </ThemedText>
             </Animated.View>
+
+            {/* New: Today's and Lifetime counts */}
+            <View style={styles.subCounts}>
+              <View style={styles.subCountRow}>
+                <ThemedText style={[styles.subCountLabel, { color: theme.textSecondary }]}>Today's count</ThemedText>
+                <ThemedText style={[styles.subCountValue, { color: activeCounter.color }]}>{activeCounter.dailyCount ?? 0}</ThemedText>
+              </View>
+              <View style={styles.subCountRow}>
+                <ThemedText style={[styles.subCountLabel, { color: theme.textSecondary }]}>Lifetime count</ThemedText>
+                <ThemedText style={[styles.subCountValue, { color: activeCounter.color }]}>{activeCounter.lifetimeCount ?? 0}</ThemedText>
+              </View>
+            </View>
+
             <ThemedText style={[styles.progressText, { color: theme.textSecondary }]}>
               {Math.round(progress * 100)}%
             </ThemedText>
@@ -234,6 +247,23 @@ const styles = StyleSheet.create({
   count: {
     ...Typography.countDisplay,
     textAlign: 'center',
+  },
+  subCounts: {
+    marginTop: Spacing.sm,
+    alignItems: 'center',
+  },
+  subCountRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+  },
+  subCountLabel: {
+    ...Typography.small,
+    marginRight: Spacing.sm,
+  },
+  subCountValue: {
+    ...Typography.body,
+    fontWeight: '600',
   },
   progressText: {
     ...Typography.goalProgress,

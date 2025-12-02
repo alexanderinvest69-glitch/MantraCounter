@@ -14,6 +14,8 @@ module.exports = function (api) {
         },
       ],
       "react-native-reanimated/plugin",
+      // This is the new line you must add to fix the build error
+      ['@babel/plugin-transform-private-methods', { 'loose': true }],
     ],
   };
 };

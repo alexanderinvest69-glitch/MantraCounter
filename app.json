@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Mantra Counter",
-    "slug": "mantra-counter",
+    "name": "Just Counter",
+    "slug": "just-counter",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
