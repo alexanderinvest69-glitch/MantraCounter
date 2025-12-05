@@ -12,10 +12,12 @@ import { ThemedView } from '@/components/ThemedView';
 import { CircularProgress } from '@/components/CircularProgress';
 import { GoalModal } from '@/components/GoalModal';
 import { Button } from '@/components/Button';
+import { vibrateGoalSuccess } from '@/utils/haptics';
 import { useCounter } from '@/context/CounterContext';
 import { useTheme } from '@/hooks/useTheme';
 import { Spacing, Typography, BorderRadius } from '@/constants/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 
 const { height: screenHeight } = Dimensions.get('window');
 const HEADER_HEIGHT = 96;
@@ -24,6 +26,7 @@ const TAB_BAR_HEIGHT = 80;
 export default function CountersScreen() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   const { counters, activeCounterId, settings, incrementCount, decrementCount, resetCount } = useCounter();
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -37,7 +40,7 @@ export default function CountersScreen() {
     if (activeCounter && previousCountRef.current < activeCounter.goal && activeCounter.count >= activeCounter.goal) {
       setShowGoalModal(true);
       if (settings.hapticEnabled) {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        vibrateGoalSuccess();
       }
     }
     if (activeCounter) {
@@ -96,9 +99,14 @@ export default function CountersScreen() {
   return (
     <ThemedView style={styles.container}>
       <View style={[styles.header, { paddingTop: insets.top + Spacing.lg }]}>
-        <ThemedText style={[styles.counterName, { color: activeCounter.color }]}>
-          {activeCounter.name}
-        </ThemedText>
+        <View style={styles.nameRow}>
+          <ThemedText style={[styles.counterName, { color: activeCounter.color }]}>
+            {activeCounter.name}
+          </ThemedText>
+          <Pressable onPress={() => navigation.navigate('EditCounter' as never)}>
+            <Feather name="edit-3" size={20} color={theme.text} />
+          </Pressable>
+        </View>
         <ThemedText style={[styles.goalText, { color: theme.textSecondary }]}>
           Goal: {activeCounter.goal}
         </ThemedText>
@@ -123,15 +131,11 @@ export default function CountersScreen() {
               </ThemedText>
             </Animated.View>
 
-            {/* New: Today's and Lifetime counts */}
+            {/* Today's count */}
             <View style={styles.subCounts}>
               <View style={styles.subCountRow}>
                 <ThemedText style={[styles.subCountLabel, { color: theme.textSecondary }]}>Today's count</ThemedText>
                 <ThemedText style={[styles.subCountValue, { color: activeCounter.color }]}>{activeCounter.dailyCount ?? 0}</ThemedText>
-              </View>
-              <View style={styles.subCountRow}>
-                <ThemedText style={[styles.subCountLabel, { color: theme.textSecondary }]}>Lifetime count</ThemedText>
-                <ThemedText style={[styles.subCountValue, { color: activeCounter.color }]}>{activeCounter.lifetimeCount ?? 0}</ThemedText>
               </View>
             </View>
 
@@ -161,6 +165,14 @@ export default function CountersScreen() {
         >
           <Feather name="minus-circle" size={24} color={theme.text} />
           <ThemedText style={styles.controlLabel}>-1</ThemedText>
+        </Pressable>
+
+        <Pressable
+          style={[styles.controlButton, { backgroundColor: theme.backgroundSecondary }]}
+          onPress={() => navigation.navigate('EditCounter' as never)}
+        >
+          <Feather name="edit-3" size={24} color={theme.text} />
+          <ThemedText style={styles.controlLabel}>Edit</ThemedText>
         </Pressable>
       </View>
 
@@ -221,6 +233,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Spacing.xl,
     paddingBottom: Spacing.lg,
+  },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
   },
   counterName: {
     ...Typography.counterName,

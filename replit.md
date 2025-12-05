@@ -1,4 +1,4 @@
-# Mantra Counter App
+# Just Counter
 
 ## Overview
 
@@ -13,7 +13,7 @@ Preferred communication style: Simple, everyday language.
 ### Frontend Architecture
 
 **Framework**: React Native with Expo SDK 54
-- **Navigation**: React Navigation v7 with bottom tab navigation (3 tabs: Counters, Add Counter, Profile)
+- **Navigation**: React Navigation v7 with bottom tab navigation (2 tabs: Enjoying App, About Us)
 - **State Management**: React Context API (`CounterContext`) for global counter and settings state
 - **UI Components**: Custom themed components with light/dark mode support
 - **Animations**: React Native Reanimated v4 for smooth UI transitions and gesture handling

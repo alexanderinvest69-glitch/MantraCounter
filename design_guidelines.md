@@ -1,4 +1,4 @@
-# Mantra Counter App - Design Guidelines
+# Just Counter - Design Guidelines
 
 ## Architecture Decisions
 

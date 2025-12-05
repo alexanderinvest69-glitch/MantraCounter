@@ -7,7 +7,6 @@ export interface Counter {
   createdAt: number;
   // optional counts for tracking
   dailyCount?: number;
-  lifetimeCount?: number;
 }
 
 export interface AppSettings {

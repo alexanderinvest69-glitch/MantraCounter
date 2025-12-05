@@ -112,7 +112,7 @@ export default function ProfileScreen() {
         <View style={[styles.aboutSection, { backgroundColor: theme.backgroundSecondary }]}>
           <Feather name="info" size={24} color={theme.primary} />
           <View style={styles.aboutText}>
-            <ThemedText style={styles.aboutTitle}>About Mantra Counter</ThemedText>
+            <ThemedText style={styles.aboutTitle}>About Just Counter</ThemedText>
             <ThemedText style={[styles.aboutDescription, { color: theme.textSecondary }]}>
               A mindful counting companion for your meditation practice. Track your mantras with ease and focus.
             </ThemedText>

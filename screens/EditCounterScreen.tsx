@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, StyleSheet, TextInput, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ThemedText } from '@/components/ThemedText';
@@ -11,27 +11,31 @@ import { Spacing, Typography, BorderRadius } from '@/constants/theme';
 import { DEFAULT_GOALS } from '@/types/counter';
 import { Feather } from '@expo/vector-icons';
 
-export default function AddCounterScreen() {
+export default function EditCounterScreen() {
   const navigation = useNavigation();
   const { theme } = useTheme();
-  const { addCounter, counters, settings } = useCounter();
-  
-  const [name, setName] = useState('');
-  const [goal, setGoal] = useState(settings.defaultGoal);
-  const [color, setColor] = useState('#6B4BA6');
+  const { counters, activeCounterId, updateCounter } = useCounter();
+
+  const activeCounter = useMemo(
+    () => counters.find((c) => c.id === activeCounterId),
+    [counters, activeCounterId]
+  );
+
+  const [name, setName] = useState(activeCounter?.name ?? '');
+  const [goal, setGoal] = useState(activeCounter?.goal ?? 108);
+  const [color, setColor] = useState(activeCounter?.color ?? '#6B4BA6');
+
+  if (!activeCounter) {
+    // Nothing to edit, return to previous screen
+    navigation.goBack();
+    return null;
+  }
 
   const handleSave = () => {
-    if (!name.trim()) {
-      return;
-    }
+    if (!name.trim() || !activeCounterId) return;
 
-    if (counters.length >= 10) {
-      return;
-    }
-
-    addCounter({
+    updateCounter(activeCounterId, {
       name: name.trim(),
-      count: 0,
       goal,
       color,
     });
@@ -39,7 +43,7 @@ export default function AddCounterScreen() {
     navigation.goBack();
   };
 
-  const canSave = name.trim().length > 0 && counters.length < 10;
+  const canSave = name.trim().length > 0;
 
   return (
     <ThemedView style={styles.container}>
@@ -75,7 +79,8 @@ export default function AddCounterScreen() {
                 style={[
                   styles.goalButton,
                   {
-                    backgroundColor: goal === presetGoal ? theme.accent : theme.backgroundSecondary,
+                    backgroundColor:
+                      goal === presetGoal ? theme.accent : theme.backgroundSecondary,
                     borderColor: theme.backgroundTertiary,
                   },
                 ]}
@@ -123,7 +128,12 @@ export default function AddCounterScreen() {
           <ColorPicker selectedColor={color} onColorSelect={setColor} />
         </View>
 
-        <View style={[styles.preview, { backgroundColor: theme.backgroundSecondary, borderColor: color }]}>
+        <View
+          style={[
+            styles.preview,
+            { backgroundColor: theme.backgroundSecondary, borderColor: color },
+          ]}
+        >
           <ThemedText style={[styles.previewLabel, { color: theme.textSecondary }]}>
             Preview
           </ThemedText>
@@ -145,17 +155,9 @@ export default function AddCounterScreen() {
           onPress={handleSave}
           disabled={!canSave}
         >
-          <Feather name="check" size={20} color="#FFFFFF" />
-          <ThemedText style={styles.saveButtonText}>
-            Create Counter
-          </ThemedText>
+          <Feather name="save" size={20} color="#FFFFFF" />
+          <ThemedText style={styles.saveButtonText}>Save Changes</ThemedText>
         </Pressable>
-
-        {counters.length >= 10 && (
-          <ThemedText style={[styles.warning, { color: '#FF6B6B' }]}>
-            Maximum of 10 counters reached. Delete a counter to create a new one.
-          </ThemedText>
-        )}
       </ScreenKeyboardAwareScrollView>
     </ThemedView>
   );
@@ -243,9 +245,5 @@ const styles = StyleSheet.create({
   saveButtonText: {
     ...Typography.buttonLabel,
     color: '#FFFFFF',
-  },
-  warning: {
-    ...Typography.small,
-    textAlign: 'center',
   },
 });

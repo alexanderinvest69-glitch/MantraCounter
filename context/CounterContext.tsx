@@ -27,7 +27,6 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
       color: '#6B4BA6',
       createdAt: Date.now(),
       dailyCount: 0,
-      lifetimeCount: 0,
     },
   ]);
   const [activeCounterId, setActiveCounterId] = useState<string | null>('1');
@@ -36,7 +35,7 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
     avatar: 'lotus',
     hapticEnabled: true,
     soundEnabled: false,
-    theme: 'auto',
+    theme: 'light',
     defaultGoal: 108,
   });
 
@@ -46,7 +45,6 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
       id: Date.now().toString(),
       createdAt: Date.now(),
       dailyCount: counter.dailyCount ?? 0,
-      lifetimeCount: counter.lifetimeCount ?? 0,
     };
     setCounters(prev => [...prev, newCounter]);
     setActiveCounterId(newCounter.id);
@@ -73,14 +71,14 @@ export function CounterProvider({ children }: { children: React.ReactNode }) {
   const incrementCount = useCallback(() => {
     if (!activeCounterId) return;
     setCounters(prev => prev.map(c => 
-      c.id === activeCounterId ? { ...c, count: Math.min(c.count + 1, 9999), dailyCount: (c.dailyCount ?? 0) + 1, lifetimeCount: (c.lifetimeCount ?? 0) + 1 } : c
+      c.id === activeCounterId ? { ...c, count: Math.min(c.count + 1, 9999), dailyCount: (c.dailyCount ?? 0) + 1 } : c
     ));
   }, [activeCounterId]);
 
   const decrementCount = useCallback(() => {
     if (!activeCounterId) return;
     setCounters(prev => prev.map(c => 
-      c.id === activeCounterId ? { ...c, count: Math.max(c.count - 1, 0), dailyCount: Math.max((c.dailyCount ?? 0) - 1, 0), lifetimeCount: Math.max((c.lifetimeCount ?? 0) - 1, 0) } : c
+      c.id === activeCounterId ? { ...c, count: Math.max(c.count - 1, 0), dailyCount: Math.max((c.dailyCount ?? 0) - 1, 0) } : c
     ));
   }, [activeCounterId]);
 

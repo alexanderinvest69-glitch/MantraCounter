@@ -1,10 +1,14 @@
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useCounter } from "@/context/CounterContext";
 
 export function useTheme() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
-  const theme = Colors[colorScheme ?? "light"];
+  const systemScheme = useColorScheme() ?? "light";
+  const { settings } = useCounter();
+  const scheme =
+    settings?.theme === "auto" ? systemScheme : (settings?.theme ?? "light");
+  const isDark = scheme === "dark";
+  const theme = Colors[scheme];
 
   return {
     theme,

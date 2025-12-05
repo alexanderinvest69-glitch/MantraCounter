@@ -1,18 +1,19 @@
 import { Platform } from "react-native";
 
-const primaryColor = "#6B4BA6";
+const primaryColor = "#FFFFFF";
 const accentColor = "#D4A574";
 
 export const Colors = {
   light: {
     text: "#1F1F1F",
     textSecondary: "#666666",
-    buttonText: "#FFFFFF",
+    buttonText: "#1F1F1F",
     primary: primaryColor,
     accent: accentColor,
+    cta: "#FFDD00",
     success: "#4CAF50",
     tabIconDefault: "#999999",
-    tabIconSelected: primaryColor,
+    tabIconSelected: accentColor,
     link: primaryColor,
     backgroundRoot: "#F8F7F4",
     backgroundDefault: "#FFFFFF",
@@ -22,12 +23,13 @@ export const Colors = {
   dark: {
     text: "#F5F5F5",
     textSecondary: "#B0B0B0",
-    buttonText: "#FFFFFF",
+    buttonText: "#1F1F1F",
     primary: primaryColor,
     accent: accentColor,
+    cta: "#FFDD00",
     success: "#4CAF50",
     tabIconDefault: "#666666",
-    tabIconSelected: primaryColor,
+    tabIconSelected: accentColor,
     link: primaryColor,
     backgroundRoot: "#1A1A2E",
     backgroundDefault: "#252540",
