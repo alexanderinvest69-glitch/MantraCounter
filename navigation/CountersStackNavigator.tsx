@@ -15,6 +15,7 @@ const Stack = createNativeStackNavigator<CountersStackParamList>();
 export default function CountersStackNavigator() {
   const { theme, isDark } = useTheme();
 
+
   return (
     <Stack.Navigator
       screenOptions={{
