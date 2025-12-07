@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/plugin-transform-private-methods": "^7.27.1",
     "@react-native-community/cli": "latest",
+    "@react-native/metro-config": "latest",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@testing-library/react-native": "^12.4.2",
@@ -50,4 +51,3 @@
   },
   "private": true
 }
-
