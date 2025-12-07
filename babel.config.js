@@ -1,21 +1,17 @@
-module.exports = function (api) {
-  api.cache(true);
-  return {
-    presets: ["babel-preset-expo"],
-    plugins: [
-      [
-        "module-resolver",
-        {
-          root: ["./"],
-          alias: {
-            "@": "./",
-          },
-          extensions: [".ios.js", ".android.js", ".js", ".ts", ".tsx", ".json"],
+module.exports = {
+  presets: ['module:metro-react-native-babel-preset'],
+  plugins: [
+    [
+      'module-resolver',
+      {
+        root: ['./'],
+        alias: {
+          '@': './',
         },
-      ],
-      "react-native-reanimated/plugin",
-      // This is the new line you must add to fix the build error
-      ['@babel/plugin-transform-private-methods', { 'loose': true }],
+        extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
+      },
     ],
-  };
+    'react-native-reanimated/plugin',
+    ['@babel/plugin-transform-private-methods', { loose: true }],
+  ],
 };
