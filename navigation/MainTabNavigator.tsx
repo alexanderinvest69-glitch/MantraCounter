@@ -4,14 +4,12 @@ import { Feather } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Platform, StyleSheet } from "react-native";
 import CountersStackNavigator from "@/navigation/CountersStackNavigator";
-import AddCounterStackNavigator from "@/navigation/AddCounterStackNavigator";
-import ProfileStackNavigator from "@/navigation/ProfileStackNavigator";
+import AboutScreen from "@/screens/AboutScreen";
 import { useTheme } from "@/hooks/useTheme";
 
 export type MainTabParamList = {
   CountersTab: undefined;
-  AddCounterTab: undefined;
-  ProfileTab: undefined;
+  AboutTab: undefined;
 };
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -49,29 +47,19 @@ export default function MainTabNavigator() {
         name="CountersTab"
         component={CountersStackNavigator}
         options={{
-          title: "Counters",
+          title: "Enjoying App",
           tabBarIcon: ({ color, size }) => (
             <Feather name="grid" size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="AddCounterTab"
-        component={AddCounterStackNavigator}
+        name="AboutTab"
+        component={AboutScreen}
         options={{
-          title: "Add",
+          title: "About Us",
           tabBarIcon: ({ color, size }) => (
-            <Feather name="plus-circle" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="ProfileTab"
-        component={ProfileStackNavigator}
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="user" size={size} color={color} />
+            <Feather name="info" size={size} color={color} />
           ),
         }}
       />

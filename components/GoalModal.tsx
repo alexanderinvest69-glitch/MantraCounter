@@ -37,7 +37,7 @@ export function GoalModal({ visible, count, goal, onContinue, onReset }: GoalMod
 
           <View style={styles.buttonContainer}>
             <Pressable
-              style={[styles.button, { backgroundColor: theme.primary }]}
+              style={[styles.button, { backgroundColor: theme.accent }]}
               onPress={onContinue}
             >
               <ThemedText style={[styles.buttonText, { color: '#FFFFFF' }]}>
@@ -46,10 +46,10 @@ export function GoalModal({ visible, count, goal, onContinue, onReset }: GoalMod
             </Pressable>
 
             <Pressable
-              style={[styles.button, styles.secondaryButton, { borderColor: theme.primary }]}
+              style={[styles.button, styles.secondaryButton, { borderColor: theme.accent }]}
               onPress={onReset}
             >
-              <ThemedText style={[styles.buttonText, { color: theme.primary }]}>
+              <ThemedText style={[styles.buttonText, { color: theme.accent }]}>
                 Reset Counter
               </ThemedText>
             </Pressable>

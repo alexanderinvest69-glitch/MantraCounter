@@ -62,7 +62,9 @@ export function Button({
       style={[
         styles.button,
         {
-          backgroundColor: theme.link,
+          backgroundColor: theme.accent,
+          borderColor: theme.backgroundTertiary,
+          borderWidth: StyleSheet.hairlineWidth,
           opacity: disabled ? 0.5 : 1,
         },
         style,
@@ -71,7 +73,7 @@ export function Button({
     >
       <ThemedText
         type="body"
-        style={[styles.buttonText, { color: theme.buttonText }]}
+        style={[styles.buttonText, { color: "#FFFFFF" }]}
       >
         {children}
       </ThemedText>

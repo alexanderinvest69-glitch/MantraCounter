@@ -5,6 +5,8 @@ export interface Counter {
   goal: number;
   color: string;
   createdAt: number;
+  // optional counts for tracking
+  dailyCount?: number;
 }
 
 export interface AppSettings {
